@@ -56,13 +56,7 @@
       <div class="row">
       <div class="col-12">
       <?php
-try {
-  $conn = new PDO("mysql:host=127.0.0.1;dbname=course_allocation", "root", "");
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  // echo "Connected successfully";
-} catch(PDOException $e) {
-  // echo "Connection failed: " . $e->getMessage();
-}
+      require_once("handlers/connection.php");
 
 ?> 
   <table class="table table-striped table-hover">
@@ -89,7 +83,7 @@ try {
             <td><?php echo $res["courseUnit"]; ?></td>
             <td>
               <button class="btn btn-sm btn-outline-success">Edit</button>
-              <button class="btn btn-sm btn-outline-danger">Delete</button>
+              <a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["courseID"]; ?>">Delete</a>
             </td>
           </tr>
     <?php
@@ -124,17 +118,17 @@ try {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form>
+      <form action="handlers/addCourse.php" method="POST">
     <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="courseCode" placeholder="Course Code">
+      <input type="text" class="form-control" required id="courseCode" name="courseCode" placeholder="Course Code">
       <label for="courseCode">Course Code</label>
     </div>
     <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="courseName" placeholder="Course Name">
+      <input type="text" class="form-control" required id="courseName" name="courseName" placeholder="Course Name">
       <label for="courseName">Course Name</label>
     </div>
     <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="courseUnit" placeholder="Course Unit">
+      <input type="number" min="1" max="20" class="form-control" required id="courseUnit" name="courseUnit" placeholder="Course Unit">
       <label for="courseUnit">Course Unit</label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
