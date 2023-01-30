@@ -32,20 +32,23 @@ body {
 		<div class="row my-5">
 			<div class="col-lg-6 col-md-6 col-12">
 				<strong>COL 3</strong>
+        <h1><?php
+        //  session_start();
+        //  echo $_SESSION["role"];?></h1>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12  py-5">
 			<main class="form-signin">
-  <form>
+  <form method="POST" action="handlers/login.php">
     <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Your username">
+      <label for="username">Username</label>
     </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
+    <div class="form-floating mt-3">
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      <label for="password">Password</label>
     </div>
 
     <div class="checkbox mb-3">

@@ -1,36 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
-    <title>Dashboard Template · Bootstrap v5.0</title>
-
-   
-    <!-- Bootstrap core CSS -->
-    <link href="assets\css\bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="assets\css\dashboard.css" rel="stylesheet">
+<head>
+    <?php require_once("page_title.php"); ?>
   </head>
   <body>
     
@@ -49,14 +20,58 @@
         <h1 class="h2">Manage Staffs</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#newCouseModal">New</button>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            This week
-          </button>
         </div>
+      </div>
+      <div class="row">
+      <div class="col-12">
+      <?php
+      require_once("handlers/connection.php");
+
+?> 
+  <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Middle Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Edit/Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+            <?php
+try {
+  $query=$conn->prepare("SELECT * FROM staffs");
+  $query->execute();
+  $n=0;
+  while($res=$query->fetch()){
+    ?>
+   <tr>
+            <th scope="row"><?php echo ++$n; ?></th>
+            <td><?php echo $res["firstName"]; ?></td>
+            <td><?php echo $res["middleName"]; ?></td>
+            <td><?php echo $res["lastName"]; ?></td>
+            <td><?php echo $res["DOB"]; ?></td>
+            <td>
+              <button class="btn btn-sm btn-outline-success">Edit</button>
+              <a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["courseID"]; ?>">Delete</a>
+            </td>
+          </tr>
+    <?php
+    // echo $res["courseName"];
+  }
+
+} catch (PDOException $e) {
+//throw $th;
+}
+?>
+          
+          </tbody>
+        </table>
+  </div>
       </div>
     </main>
   </div>
@@ -68,5 +83,6 @@
       <!-- <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
          -->
       </script><script src=assets\js\dashboard.js"></script>
-  </body>
+
+    </body>
 </html>
