@@ -3,6 +3,7 @@
     <meta name="description" content="">
     <meta name="author" content="Omar S. Suleiman">
     <meta name="generator" content="Omar S">
+    <link rel="icon" href="assets/img/SUZA.png"/>
     <title>Lecturer's Course Allocation</title>
     <link href="assets\css\bootstrap.min.css" rel="stylesheet">
     <style>
