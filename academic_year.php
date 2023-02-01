@@ -38,40 +38,42 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Admin") {
 						require_once("handlers/connection.php");
 
 						?>
-						<table class="table table-striped table-hover">
-							<thead>
-								<tr>
-									<th scope="col">S/N</th>
-									<th scope="col">Academic Year</th>
-									<th scope="col">Edit/Delete</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								try {
-									$query = $conn->prepare("SELECT * FROM academic_years");
-									$query->execute();
-									$n = 0;
-									while ($res = $query->fetch()) {
-								?>
-										<tr>
-											<th scope="row"><?php echo ++$n; ?></th>
-											<td><?php echo $res["acYear"]; ?></td>
-											<td>
-												<a class="btn btn-sm btn-outline-success" href="editAcademicYear.php?id=<?php echo $res['acYearID'] ?>">Edit</a>
-												<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteAcademicYear.php?cId=<?php echo $res["acYearID"]; ?>">Delete</a>
-											</td>
-										</tr>
-								<?php
-										// echo $res["acYear"];
+						<div class="table-responsive">
+							<table id="example" class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th scope="col">S/N</th>
+										<th scope="col">Academic Year</th>
+										<th scope="col">Edit/Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									try {
+										$query = $conn->prepare("SELECT * FROM academic_years");
+										$query->execute();
+										$n = 0;
+										while ($res = $query->fetch()) {
+									?>
+											<tr>
+												<th scope="row"><?php echo ++$n; ?></th>
+												<td><?php echo $res["acYear"]; ?></td>
+												<td>
+													<a class="btn btn-sm btn-outline-success" href="editAcademicYear.php?id=<?php echo $res['acYearID'] ?>">Edit</a>
+													<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteAcademicYear.php?cId=<?php echo $res["acYearID"]; ?>">Delete</a>
+												</td>
+											</tr>
+									<?php
+											// echo $res["acYear"];
+										}
+									} catch (PDOException $e) {
+										//throw $th;
 									}
-								} catch (PDOException $e) {
-									//throw $th;
-								}
-								?>
+									?>
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</main>
@@ -85,6 +87,11 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Admin") {
          -->
 	</script>
 	<script src=assets\js\dashboard.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
 
 	<div class="modal fade" id="newCouseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newCouseModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

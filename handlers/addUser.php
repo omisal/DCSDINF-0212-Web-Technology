@@ -8,13 +8,6 @@ if(isset($_POST["firstName"])){
     $user = $_POST["userName"];
     $pass= md5($user);
     $role = $_POST["role"];
-    echo $fName."---";
-    echo $mName."---";
-    echo $lName."---";
-    echo $dob."---";
-    echo $user."---";
-    echo $pass."---";
-    echo $role."---";
     $stmt=$conn->prepare("INSERT INTO users(userName, password, roleID, lastLogin) VALUES (:user,:pass,:role,CURRENT_TIMESTAMP)");
     $stmt->execute(array(":user"=>$user,":role"=>$role,":pass"=>$pass));
     $userID= $conn->lastInsertId();

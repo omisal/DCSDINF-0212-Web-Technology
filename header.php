@@ -2,6 +2,15 @@
 if (!isset($_SESSION["user"])) {
 	header("location:index.php");
 }
+require_once("handlers/connection.php");
+try {
+	$query = $conn->prepare("SELECT * FROM users u,staffs s,roles r WHERE u.userID=s.userID AND u.roleID=r.roleID AND u.userName=:name");
+	$user = $_SESSION["user"];
+	$query->execute(array(":name" => $user));
+	$res = $query->fetch();
+} catch (PDOException $e) {
+	//throw $th;
+}
 ?>
 <header class="navbar navbar-dark sticky-top bg-dark py-2 shadow">
 	<div class="container-fluid">
@@ -14,10 +23,10 @@ if (!isset($_SESSION["user"])) {
 			</div>
 			<div class="col-6 text-right">
 				<div class="dropdown text-end">
-					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-						<img src="assets/profile/avatar.jpg" alt="mdo" width="35" height="32" class="rounded-circle">
+					<a href="#" class="link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="<?php echo 'assets/profile/' . $res["profile"]; ?>" alt="mdo" width="35" height="32" class="rounded-circle">
 					</a>
-					<ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+					<ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
 						<li><a class="dropdown-item" href="#">Settings</a></li>
 						<li><a class="dropdown-item" href="profile.php">Profile</a></li>
 						<li>

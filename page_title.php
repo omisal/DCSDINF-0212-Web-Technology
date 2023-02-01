@@ -5,7 +5,16 @@
 <meta name="generator" content="Omar S">
 <link rel="icon" href="assets/img/SUZA.png" />
 <title>Lecturer's Course Allocation</title>
-<link href="assets\css\bootstrap.min.css" rel="stylesheet">
+<link href="assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="assets/datatables/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/datatables/responsive.bootstrap.min.css">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="assets/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="assets/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/datatables/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="assets/datatables/responsive.bootstrap.min.js"></script>
 <style>
 	.bd-placeholder-img {
 		font-size: 1.125rem;

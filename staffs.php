@@ -38,50 +38,52 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Admin") {
 						require_once("handlers/connection.php");
 
 						?>
-						<table class="table table-striped table-hover">
-							<thead>
-								<tr>
-									<th scope="col">S/N</th>
-									<th scope="col">First Name</th>
-									<th scope="col">Middle Name</th>
-									<th scope="col">Last Name</th>
-									<th scope="col">Date of Birth</th>
-									<th scope="col">Username</th>
-									<th scope="col">Edit/Delete</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								try {
-									$roleQry = $conn->prepare("SELECT * FROM roles");
-									$staffQry = $conn->prepare("SELECT * FROM users u,staffs s,roles r WHERE u.roleID=r.roleID AND u.userID=s.userID");
-									$roleQry->execute();
-									$staffQry->execute();
-									$n = 0;
-									while ($res = $staffQry->fetch()) {
-								?>
-										<tr>
-											<th scope="row"><?php echo ++$n; ?></th>
-											<td><?php echo $res["firstName"]; ?></td>
-											<td><?php echo $res["middleName"]; ?></td>
-											<td><?php echo $res["lastName"]; ?></td>
-											<td><?php echo date_format(date_create($res["DOB"]), "d F, Y") ?></td>
-											<td><?php echo $res["userName"]; ?></td>
-											<td>
-												<button class="btn btn-sm btn-outline-success">Edit</button>
-												<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["userID"]; ?>">Delete</a>
-											</td>
-										</tr>
-								<?php
-										// echo $res["courseName"];
+						<div class="table-responsive">
+							<table id="example" class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th scope="col">S/N</th>
+										<th scope="col">First Name</th>
+										<th scope="col">Middle Name</th>
+										<th scope="col">Last Name</th>
+										<th scope="col">Date of Birth</th>
+										<th scope="col">Username</th>
+										<th scope="col">Edit/Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									try {
+										$roleQry = $conn->prepare("SELECT * FROM roles");
+										$staffQry = $conn->prepare("SELECT * FROM users u,staffs s,roles r WHERE u.roleID=r.roleID AND u.userID=s.userID");
+										$roleQry->execute();
+										$staffQry->execute();
+										$n = 0;
+										while ($res = $staffQry->fetch()) {
+									?>
+											<tr>
+												<th scope="row"><?php echo ++$n; ?></th>
+												<td><?php echo $res["firstName"]; ?></td>
+												<td><?php echo $res["middleName"]; ?></td>
+												<td><?php echo $res["lastName"]; ?></td>
+												<td><?php echo date_format(date_create($res["DOB"]), "d F, Y") ?></td>
+												<td><?php echo $res["userName"]; ?></td>
+												<td>
+													<button class="btn btn-sm btn-outline-success">Edit</button>
+													<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["userID"]; ?>">Delete</a>
+												</td>
+											</tr>
+									<?php
+											// echo $res["courseName"];
+										}
+									} catch (PDOException $e) {
+										//throw $th;
 									}
-								} catch (PDOException $e) {
-									//throw $th;
-								}
-								?>
+									?>
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</main>
@@ -95,6 +97,11 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Admin") {
          -->
 	</script>
 	<script src=assets\js\dashboard.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
 
 </body>
 

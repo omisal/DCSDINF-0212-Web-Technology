@@ -35,44 +35,48 @@ session_start();
 						require_once("handlers/connection.php");
 
 						?>
-						<table class="table table-striped table-hover">
-							<thead>
-								<tr>
-									<th scope="col">S/N</th>
-									<th scope="col">Course Code</th>
-									<th scope="col">Course Name</th>
-									<th scope="col">Unit</th>
-									<th scope="col">Edit/Delete</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								try {
-									$query = $conn->prepare("SELECT * FROM courses");
-									$query->execute();
-									$n = 0;
-									while ($res = $query->fetch()) {
-								?>
+						<div class="table-responsive">
+							<div class="table-responsive">
+								<table id="example" class="table table-striped table-hover">
+									<thead>
 										<tr>
-											<th scope="row"><?php echo ++$n; ?></th>
-											<td><?php echo $res["courseCode"]; ?></td>
-											<td><?php echo $res["courseName"]; ?></td>
-											<td><?php echo $res["courseUnit"]; ?></td>
-											<td>
-												<a class="btn btn-sm btn-outline-success" href="editCourse.php?id=<?php echo $res['courseID'] ?>">Edit</a>
-												<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["courseID"]; ?>">Delete</a>
-											</td>
+											<th scope="col">S/N</th>
+											<th scope="col">Course Code</th>
+											<th scope="col">Course Name</th>
+											<th scope="col">Unit</th>
+											<th scope="col">Edit/Delete</th>
 										</tr>
-								<?php
-										// echo $res["courseName"];
-									}
-								} catch (PDOException $e) {
-									//throw $th;
-								}
-								?>
+									</thead>
+									<tbody>
+										<?php
+										try {
+											$query = $conn->prepare("SELECT * FROM courses");
+											$query->execute();
+											$n = 0;
+											while ($res = $query->fetch()) {
+										?>
+												<tr>
+													<th scope="row"><?php echo ++$n; ?></th>
+													<td><?php echo $res["courseCode"]; ?></td>
+													<td><?php echo $res["courseName"]; ?></td>
+													<td><?php echo $res["courseUnit"]; ?></td>
+													<td>
+														<a class="btn btn-sm btn-outline-success" href="editCourse.php?id=<?php echo $res['courseID'] ?>">Edit</a>
+														<a class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to delete?');" href="handlers/deleteCourse.php?cId=<?php echo $res["courseID"]; ?>">Delete</a>
+													</td>
+												</tr>
+										<?php
+												// echo $res["courseName"];
+											}
+										} catch (PDOException $e) {
+											//throw $th;
+										}
+										?>
 
-							</tbody>
-						</table>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</main>
@@ -81,11 +85,15 @@ session_start();
 
 
 	<script src="assets\js\bootstrap.bundle.min.js"></script>
-
 	<!-- <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
          -->
 	</script>
-	<script src=assets\js\dashboard.js"></script>
+	<!-- <script src=assets\js\dashboard.js"></script> -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
 
 	<div class="modal fade" id="newCouseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newCouseModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
