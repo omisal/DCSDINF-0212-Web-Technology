@@ -1,8 +1,21 @@
+<?php
+require_once("handlers/connection.php");
+try {
+	$query = $conn->prepare("SELECT * FROM users u,staffs s,roles r WHERE u.userID=s.userID AND u.roleID=r.roleID AND u.userName=:name");
+	$user = $_SESSION["user"];
+	$query->execute(array(":name" => $user));
+	$res = $query->fetch();
+} catch (PDOException $e) {
+	//throw $th;
+}
+?>
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-	<img src="assets/profile/avatar.jpg" alt="" class="img rounded-circle img-thumbnail d-block mx-auto mt-2" style="width: 120px;height: 120px;">
+	<img src="<?php echo 'assets/profile/' . $res["profile"]; ?>" alt="" class="img rounded-circle img-thumbnail d-block mx-auto mt-2" style="width: 120px;height: 120px;">
 	<div class="d-block text-center">
-		<strong class="font-weight-bold">FName LName</strong>
-		<p>Role Description</p>
+		<strong class="font-weight-bold">
+			<?php echo $res["firstName"] . " " . $res["middleName"] . " " . $res["lastName"]; ?>
+		</strong>
+		<p><?php echo $res["roleDescription"]; ?></p>
 	</div>
 	<div class="position-sticky border-top">
 		<ul class="nav flex-column">
